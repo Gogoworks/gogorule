@@ -1,22 +1,57 @@
 # NAME: OpenAI
 # AUTHOR: GogoRule
 # REPO: https://github.com/<your_name>/GogoRule
-# UPDATED: 2025-12-10 12:44:28
-# DOMAIN: 25
-# DOMAIN-KEYWORD: 0
-# DOMAIN-SUFFIX: 10
-# IP-ASN: 0
-# IP-CIDR: 0
-# TOTAL: 35
+# UPDATED: 2025-12-10 05:15:47
+# DOMAIN: 32
+# DOMAIN-KEYWORD: 1
+# DOMAIN-SUFFIX: 29
+# IP-ASN: 1
+# IP-CIDR: 2
+# TOTAL: 65
 #
 # SOURCES:
 # - rules/base/openai_blackmatrix.list
 # - rules/base/openai_acl4ssr.list
 # - rules/custom/openai_custom.list
 
-DOMAIN-SUFFIX,auth.openai.com
+DOMAIN,browser-intake-datadoghq.com
+DOMAIN,chat.openai.com.cdn.cloudflare.net
+DOMAIN,openai-api.arkoselabs.com
+DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+DOMAIN,openaicomproductionae4b.blob.core.windows.net
+DOMAIN,production-openaicom-storage.azureedge.net
+DOMAIN,static.cloudflareinsights.com
+DOMAIN-SUFFIX,ai.com
+DOMAIN-SUFFIX,algolia.net
+DOMAIN-SUFFIX,api.statsig.com
+DOMAIN-SUFFIX,auth0.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chatgpt.livekit.cloud
+DOMAIN-SUFFIX,client-api.arkoselabs.com
+DOMAIN-SUFFIX,events.statsigapi.net
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,host.livekit.cloud
+DOMAIN-SUFFIX,identrust.com
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN-SUFFIX,launchdarkly.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,observeit.net
 DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+DOMAIN-SUFFIX,openaicom.imgix.net
+DOMAIN-SUFFIX,segment.io
+DOMAIN-SUFFIX,sentry.io
+DOMAIN-SUFFIX,stripe.com
+DOMAIN-SUFFIX,turn.livekit.cloud
+DOMAIN-KEYWORD,openai
+IP-CIDR,24.199.123.28/32,no-resolve
+IP-CIDR,64.23.132.171/32,no-resolve
+IP-ASN,20473,no-resolve
+DOMAIN-SUFFIX,challenges.cloudflare.com
+DOMAIN-SUFFIX,sora.com
+DOMAIN-SUFFIX,auth.openai.com
 DOMAIN,chat.openai.com
 DOMAIN,android.chat.openai.com
 DOMAIN,desktop.chat.openai.com
@@ -24,17 +59,12 @@ DOMAIN,ios.chat.openai.com
 DOMAIN,tcr9i.chat.openai.com
 DOMAIN,auth0.openai.com
 DOMAIN,setup.auth.openai.com
-DOMAIN-SUFFIX,oaistatic.com
-DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN,oaiusercontent.com
-DOMAIN-SUFFIX,featuregates.org
 DOMAIN-SUFFIX,statsig.com
 DOMAIN,statsigapi.net
 DOMAIN,events.statsigapi.net
 DOMAIN,featureassets.org
 DOMAIN,prodregistryv2.org
-DOMAIN-SUFFIX,intercom.io
-DOMAIN-SUFFIX,intercomcdn.com
 DOMAIN,js.intercomcdn.com
 DOMAIN,js.stripe.com
 DOMAIN-SUFFIX,ct.sendgrid.net
