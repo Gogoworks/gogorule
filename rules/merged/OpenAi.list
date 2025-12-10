@@ -1,7 +1,7 @@
 # NAME: OpenAI
 # AUTHOR: GogoRule
-# REPO: https://github.com/<your_name>/GogoRule
-# UPDATED: 2025-12-10 05:15:47
+# REPO: https://github.com/Gogoworks/gogorule
+# UPDATED: 2025-12-10 14:06:13
 # DOMAIN: 32
 # DOMAIN-KEYWORD: 1
 # DOMAIN-SUFFIX: 29
@@ -46,9 +46,6 @@ DOMAIN-SUFFIX,sentry.io
 DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,turn.livekit.cloud
 DOMAIN-KEYWORD,openai
-IP-CIDR,24.199.123.28/32,no-resolve
-IP-CIDR,64.23.132.171/32,no-resolve
-IP-ASN,20473,no-resolve
 DOMAIN-SUFFIX,challenges.cloudflare.com
 DOMAIN-SUFFIX,sora.com
 DOMAIN-SUFFIX,auth.openai.com
@@ -79,3 +76,8 @@ DOMAIN,o33249.ingest.sentry.io
 DOMAIN,rum.browser-intake-datadoghq.com
 DOMAIN,challenges.cloudflare.com
 DOMAIN,humb.apple.com
+
+# === IP 规则（自动聚合） ===
+IP-CIDR,24.199.123.28/32,no-resolve
+IP-CIDR,64.23.132.171/32,no-resolve
+IP-ASN,20473,no-resolve

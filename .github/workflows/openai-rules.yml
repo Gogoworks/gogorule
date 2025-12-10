@@ -3,6 +3,9 @@ name: Update OpenAI Rules
 on:
   # 手动触发，方便你先观察效果
   workflow_dispatch:
+  # 每天 1:00 UTC 自动更新一次（约等于北京时间 09:00）
+  schedule:
+    - cron: "0 1 * * *"
 
 jobs:
   update-openai-rules:

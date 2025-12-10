@@ -17,6 +17,10 @@ CUSTOM_DIR="${ROOT_DIR}/rules/custom"
 MERGED_DIR="${ROOT_DIR}/rules/merged"
 OUTPUT_FILE="${MERGED_DIR}/OpenAi.list"
 
+# 仓库信息（用于注释头）
+REPO_OWNER="Gogoworks"
+REPO_NAME="gogorule"
+
 INPUT_FILES=(
   "${BASE_DIR}/openai_blackmatrix.list"
   "${BASE_DIR}/openai_acl4ssr.list"
@@ -27,7 +31,9 @@ mkdir -p "${MERGED_DIR}"
 
 TMP_FILE="$(mktemp)"
 DEDUP_FILE="$(mktemp)"
-trap 'rm -f "${TMP_FILE}" "${DEDUP_FILE}"' EXIT
+DOMAIN_FILE="$(mktemp)"
+IP_FILE="$(mktemp)"
+trap 'rm -f "${TMP_FILE}" "${DEDUP_FILE}" "${DOMAIN_FILE}" "${IP_FILE}"' EXIT
 
 > "${TMP_FILE}"
 
@@ -71,7 +77,7 @@ eval "${COUNTS}"
 {
   echo "# NAME: OpenAI"
   echo "# AUTHOR: GogoRule"
-  echo "# REPO: https://github.com/<your_name>/GogoRule"
+  echo "# REPO: https://github.com/${REPO_OWNER}/${REPO_NAME}"
   echo "# UPDATED: $(date '+%Y-%m-%d %H:%M:%S')"
   echo "# DOMAIN: ${DOMAIN_COUNT}"
   echo "# DOMAIN-KEYWORD: ${DOMAIN_KEYWORD_COUNT}"
@@ -87,7 +93,21 @@ eval "${COUNTS}"
   echo
 } > "${OUTPUT_FILE}"
 
-cat "${DEDUP_FILE}" >> "${OUTPUT_FILE}"
+# 将去重后的规则拆分为「域名类」和「IP 类」，IP 类聚合到末尾
+awk '
+  $1 ~ /^IP-ASN,/ || $1 ~ /^IP-CIDR,/ { print > ip_file; next }
+  { print > domain_file }
+' domain_file="${DOMAIN_FILE}" ip_file="${IP_FILE}" "${DEDUP_FILE}"
+
+cat "${DOMAIN_FILE}" >> "${OUTPUT_FILE}"
+
+if [[ -s "${IP_FILE}" ]]; then
+  {
+    echo
+    echo "# === IP 规则（自动聚合） ==="
+  } >> "${OUTPUT_FILE}"
+  cat "${IP_FILE}" >> "${OUTPUT_FILE}"
+fi
 
 rel_output="${OUTPUT_FILE#${ROOT_DIR}/}"
 echo "已生成合并规则文件: ${rel_output}"
