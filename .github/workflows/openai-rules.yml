@@ -1,0 +1,49 @@
+name: Update OpenAI Rules
+
+on:
+  # 手动触发，方便你先观察效果
+  workflow_dispatch:
+
+jobs:
+  update-openai-rules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch upstream OpenAI rules (BlackMatrix7)
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list" \
+            -o rules/base/openai_blackmatrix.list
+
+      - name: Fetch upstream OpenAI rules (ACL4SSR)
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list" \
+            -o rules/base/openai_acl4ssr.list
+
+      - name: Merge OpenAI rules
+        run: |
+          chmod +x scripts/merge_openai.sh
+          ./scripts/merge_openai.sh
+
+      - name: Commit and push if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git status --porcelain | grep -qE 'rules/base|rules/merged'; then
+            echo "Changes detected, committing..."
+            git add rules/base/openai_blackmatrix.list \
+                    rules/base/openai_acl4ssr.list \
+                    rules/merged/OpenAi.list
+            git commit -m "chore: update OpenAI rules"
+            git push
+          else
+            echo "No changes to commit."
+          fi
+

@@ -1,0 +1,58 @@
+# OpenAI 自定义规则（本地维护）
+# 说明：
+# - 本文件由你手动维护，用于补充/覆盖上游规则项目
+# - 上游规则文件位于 rules/base/ 目录，由脚本自动同步
+
+# === OpenAI / ChatGPT 主站域名 ===
+DOMAIN-SUFFIX,auth.openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,openai.com
+DOMAIN,chat.openai.com
+DOMAIN,android.chat.openai.com
+DOMAIN,desktop.chat.openai.com
+DOMAIN,ios.chat.openai.com
+DOMAIN,tcr9i.chat.openai.com
+DOMAIN,auth0.openai.com
+DOMAIN,setup.auth.openai.com
+
+# === OpenAI 静态资源与文件存储 ===
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN,oaiusercontent.com
+
+# === 实验配置 / 特性开关相关 ===
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,statsig.com
+DOMAIN,statsigapi.net
+DOMAIN,events.statsigapi.net
+DOMAIN,featureassets.org
+DOMAIN,prodregistryv2.org
+
+# === 客服 / 嵌入式消息 ===
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN,js.intercomcdn.com
+
+# === 支付 / 结算相关 ===
+DOMAIN,js.stripe.com
+
+# === 邮件服务 ===
+DOMAIN-SUFFIX,ct.sendgrid.net
+
+# === 第三方身份与登录基础设施（WorkOS 等） ===
+DOMAIN,cdn.workos.com
+DOMAIN,forwarder.workos.com
+DOMAIN,setup.workos.com
+DOMAIN,images.workoscdn.com
+DOMAIN,workos.imgix.net
+DOMAIN,cdn.openaimerge.com
+
+# === 监控 / 埋点系统 ===
+DOMAIN,o207216.ingest.sentry.io
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,rum.browser-intake-datadoghq.com
+
+# === 平台依赖 / 其它关键域名 ===
+DOMAIN,challenges.cloudflare.com
+DOMAIN,humb.apple.com
+

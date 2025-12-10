@@ -1,0 +1,51 @@
+# NAME: OpenAI
+# AUTHOR: GogoRule
+# REPO: https://github.com/<your_name>/GogoRule
+# UPDATED: 2025-12-10 12:44:28
+# DOMAIN: 25
+# DOMAIN-KEYWORD: 0
+# DOMAIN-SUFFIX: 10
+# IP-ASN: 0
+# IP-CIDR: 0
+# TOTAL: 35
+#
+# SOURCES:
+# - rules/base/openai_blackmatrix.list
+# - rules/base/openai_acl4ssr.list
+# - rules/custom/openai_custom.list
+
+DOMAIN-SUFFIX,auth.openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,openai.com
+DOMAIN,chat.openai.com
+DOMAIN,android.chat.openai.com
+DOMAIN,desktop.chat.openai.com
+DOMAIN,ios.chat.openai.com
+DOMAIN,tcr9i.chat.openai.com
+DOMAIN,auth0.openai.com
+DOMAIN,setup.auth.openai.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN,oaiusercontent.com
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,statsig.com
+DOMAIN,statsigapi.net
+DOMAIN,events.statsigapi.net
+DOMAIN,featureassets.org
+DOMAIN,prodregistryv2.org
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN,js.intercomcdn.com
+DOMAIN,js.stripe.com
+DOMAIN-SUFFIX,ct.sendgrid.net
+DOMAIN,cdn.workos.com
+DOMAIN,forwarder.workos.com
+DOMAIN,setup.workos.com
+DOMAIN,images.workoscdn.com
+DOMAIN,workos.imgix.net
+DOMAIN,cdn.openaimerge.com
+DOMAIN,o207216.ingest.sentry.io
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,rum.browser-intake-datadoghq.com
+DOMAIN,challenges.cloudflare.com
+DOMAIN,humb.apple.com
