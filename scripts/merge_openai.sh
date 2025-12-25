@@ -33,7 +33,10 @@ TMP_FILE="$(mktemp)"
 DEDUP_FILE="$(mktemp)"
 DOMAIN_FILE="$(mktemp)"
 IP_FILE="$(mktemp)"
-trap 'rm -f "${TMP_FILE}" "${DEDUP_FILE}" "${DOMAIN_FILE}" "${IP_FILE}"' EXIT
+NEW_RULE_LINES_FILE="$(mktemp)"
+OLD_RULE_LINES_FILE="$(mktemp)"
+OUTPUT_TMP_FILE="$(mktemp)"
+trap 'rm -f "${TMP_FILE}" "${DEDUP_FILE}" "${DOMAIN_FILE}" "${IP_FILE}" "${NEW_RULE_LINES_FILE}" "${OLD_RULE_LINES_FILE}" "${OUTPUT_TMP_FILE}"' EXIT
 
 > "${TMP_FILE}"
 
@@ -73,7 +76,26 @@ COUNTS="$(
 
 eval "${COUNTS}"
 
-# 写入规范化注释头
+# 将去重后的规则拆分为「域名类」和「IP 类」，IP 类聚合到末尾
+awk '
+  $1 ~ /^IP-ASN,/ || $1 ~ /^IP-CIDR,/ { print > ip_file; next }
+  { print > domain_file }
+' domain_file="${DOMAIN_FILE}" ip_file="${IP_FILE}" "${DEDUP_FILE}"
+
+cat "${DOMAIN_FILE}" > "${NEW_RULE_LINES_FILE}"
+cat "${IP_FILE}" >> "${NEW_RULE_LINES_FILE}"
+
+# 幂等性：如果“规则行内容”未变化，则不重写输出文件（让 # UPDATED 表示最后一次内容变化时间）
+if [[ -f "${OUTPUT_FILE}" ]]; then
+  awk 'NF && $1 !~ /^#/' "${OUTPUT_FILE}" > "${OLD_RULE_LINES_FILE}"
+  if cmp -s "${OLD_RULE_LINES_FILE}" "${NEW_RULE_LINES_FILE}"; then
+    rel_output="${OUTPUT_FILE#${ROOT_DIR}/}"
+    echo "规则内容未变化，保持现有文件不更新: ${rel_output}"
+    exit 0
+  fi
+fi
+
+# 写入规范化注释头（仅在规则行变化时更新输出）
 {
   echo "# NAME: OpenAI"
   echo "# AUTHOR: GogoRule"
@@ -91,23 +113,19 @@ eval "${COUNTS}"
   echo "# - rules/base/openai_acl4ssr.list"
   echo "# - rules/custom/openai_custom.list"
   echo
-} > "${OUTPUT_FILE}"
+} > "${OUTPUT_TMP_FILE}"
 
-# 将去重后的规则拆分为「域名类」和「IP 类」，IP 类聚合到末尾
-awk '
-  $1 ~ /^IP-ASN,/ || $1 ~ /^IP-CIDR,/ { print > ip_file; next }
-  { print > domain_file }
-' domain_file="${DOMAIN_FILE}" ip_file="${IP_FILE}" "${DEDUP_FILE}"
-
-cat "${DOMAIN_FILE}" >> "${OUTPUT_FILE}"
+cat "${DOMAIN_FILE}" >> "${OUTPUT_TMP_FILE}"
 
 if [[ -s "${IP_FILE}" ]]; then
   {
     echo
     echo "# === IP 规则（自动聚合） ==="
-  } >> "${OUTPUT_FILE}"
-  cat "${IP_FILE}" >> "${OUTPUT_FILE}"
+  } >> "${OUTPUT_TMP_FILE}"
+  cat "${IP_FILE}" >> "${OUTPUT_TMP_FILE}"
 fi
+
+mv "${OUTPUT_TMP_FILE}" "${OUTPUT_FILE}"
 
 rel_output="${OUTPUT_FILE#${ROOT_DIR}/}"
 echo "已生成合并规则文件: ${rel_output}"
